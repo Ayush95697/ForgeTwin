@@ -1,0 +1,4 @@
+@model ForgeTwin.Models.WorkOrderInventoryItem
+@{ ViewData["Title"] = "Edit work order part"; }
+<h1>Edit work order part</h1><form asp-action="Edit"><input type="hidden" asp-for="WorkOrderId" /><input type="hidden" asp-for="InventoryItemId" /><dl class="row"><dt class="col-sm-3">Work order</dt><dd class="col-sm-9">@Model.WorkOrderId</dd><dt class="col-sm-3">Inventory item</dt><dd class="col-sm-9">@Model.InventoryItemId</dd></dl><div class="mb-3"><label asp-for="QuantityUsed" class="form-label"></label><input asp-for="QuantityUsed" class="form-control" /><span asp-validation-for="QuantityUsed" class="text-danger"></span></div><button type="submit" class="btn btn-primary">Save</button> <a asp-action="Index" asp-route-workOrderId="@Model.WorkOrderId" class="btn btn-secondary">Cancel</a></form>
+@section Scripts { @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); } }

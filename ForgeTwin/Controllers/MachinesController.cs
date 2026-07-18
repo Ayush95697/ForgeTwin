@@ -1,9 +1,11 @@
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using ForgeTwin.Models;
 using ForgeTwin.Data;
 
+[Authorize]
 public class MachinesController : Controller
 {
     private readonly ForgeTwinDbContext _context;
@@ -111,6 +113,7 @@ public class MachinesController : Controller
     }
 
     // GET: MACHINES/Delete/5
+    [Authorize(Roles = "Administrator,Supervisor")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -131,6 +134,7 @@ public class MachinesController : Controller
     // POST: MACHINES/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrator,Supervisor")]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
         var machine = await _context.Machines.FindAsync(id);

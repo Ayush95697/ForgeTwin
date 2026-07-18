@@ -1,0 +1,3 @@
+@model ForgeTwin.Models.ProductionLog
+@{ ViewData["Title"] = "Production log"; }
+<h1>Production log</h1><dl class="row"><dt class="col-sm-3">Machine</dt><dd class="col-sm-9">@Model.Machine.Name</dd><dt class="col-sm-3">Units produced</dt><dd class="col-sm-9">@Model.UnitsProduced</dd><dt class="col-sm-3">Defect count</dt><dd class="col-sm-9">@Model.DefectCount</dd><dt class="col-sm-3">Logged at</dt><dd class="col-sm-9">@Model.LoggedAt</dd></dl><a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> | <a asp-action="Index">Back to list</a>

@@ -1,0 +1,6 @@
+@model IEnumerable<ForgeTwin.Models.WorkOrderInventoryItem>
+@{ ViewData["Title"] = "Work order parts"; var workOrderId = ViewData["WorkOrderId"]; }
+<h1>Work order parts</h1><p><a asp-action="Create" asp-route-workOrderId="@workOrderId" class="btn btn-primary">Add inventory item</a></p>
+<table class="table"><thead><tr><th>Work order</th><th>Inventory item</th><th>@Html.DisplayNameFor(model => model.QuantityUsed)</th><th></th></tr></thead><tbody>
+@foreach (var item in Model) { <tr><td><a asp-controller="WorkOrders" asp-action="Details" asp-route-id="@item.WorkOrderId">#@item.WorkOrderId — @item.WorkOrder.Machine.Name</a></td><td>@item.InventoryItem.Name</td><td>@item.QuantityUsed</td><td><a asp-action="Edit" asp-route-workOrderId="@item.WorkOrderId" asp-route-inventoryItemId="@item.InventoryItemId">Edit</a> | <a asp-action="Delete" asp-route-workOrderId="@item.WorkOrderId" asp-route-inventoryItemId="@item.InventoryItemId">Delete</a></td></tr> }
+</tbody></table>

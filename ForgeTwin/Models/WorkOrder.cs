@@ -11,9 +11,9 @@ public partial class WorkOrder
 
     public int? AssignedToUserId { get; set; }
 
-    public byte Status { get; set; }
+    public WorkOrderStatus Status { get; set; }
 
-    public byte Priority { get; set; }
+    public WorkOrderPriority Priority { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

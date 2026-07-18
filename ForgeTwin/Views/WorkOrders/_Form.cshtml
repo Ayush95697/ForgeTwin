@@ -1,0 +1,8 @@
+@model ForgeTwin.Models.WorkOrder
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="mb-3"><label asp-for="MachineId" class="form-label">Machine</label><select asp-for="MachineId" class="form-select" asp-items="ViewBag.MachineId"><option value="">-- Select a machine --</option></select><span asp-validation-for="MachineId" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="AssignedToUserId" class="form-label">Assigned to</label><select asp-for="AssignedToUserId" class="form-select" asp-items="ViewBag.AssignedToUserId"><option value="">-- Unassigned --</option></select>@if (!(ViewBag.HasUsers ?? false)) { <div class="form-text">No users exist yet. <a asp-controller="Users" asp-action="Create">Create a user</a> before assigning this work order.</div> }</div>
+<div class="mb-3"><label asp-for="Status" class="form-label"></label><select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<WorkOrderStatus>()"></select></div>
+<div class="mb-3"><label asp-for="Priority" class="form-label"></label><select asp-for="Priority" class="form-select" asp-items="Html.GetEnumSelectList<WorkOrderPriority>()"></select></div>
+<div class="mb-3"><label asp-for="CreatedAt" class="form-label"></label><input asp-for="CreatedAt" class="form-control" /></div>
+<div class="mb-3"><label asp-for="DueDate" class="form-label"></label><input asp-for="DueDate" class="form-control" /></div>

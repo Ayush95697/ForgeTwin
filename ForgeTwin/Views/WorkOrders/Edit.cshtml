@@ -1,0 +1,5 @@
+@model ForgeTwin.Models.WorkOrder
+@{ ViewData["Title"] = "Edit work order"; }
+<h1>Edit work order</h1><p class="text-muted">Changing status to <strong>Completed</strong> deducts the linked parts from inventory as part of this save.</p>
+<form asp-action="Edit"><input type="hidden" asp-for="Id" /><input type="hidden" asp-for="RowVersion" /><partial name="_Form" model="Model" /><button type="submit" class="btn btn-primary">Save</button> <a asp-action="Index" class="btn btn-secondary">Cancel</a></form>
+@section Scripts { @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); } }

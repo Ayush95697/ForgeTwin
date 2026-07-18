@@ -1,0 +1,6 @@
+@model IEnumerable<ForgeTwin.Models.ProductionLog>
+@{ ViewData["Title"] = "Production logs"; }
+<h1>Production logs</h1><p><a asp-action="Create" class="btn btn-primary">Create production log</a></p>
+<table class="table"><thead><tr><th>Machine</th><th>@Html.DisplayNameFor(model => model.UnitsProduced)</th><th>@Html.DisplayNameFor(model => model.DefectCount)</th><th>@Html.DisplayNameFor(model => model.LoggedAt)</th><th></th></tr></thead><tbody>
+@foreach (var item in Model) { <tr><td>@item.Machine.Name</td><td>@item.UnitsProduced</td><td>@item.DefectCount</td><td>@item.LoggedAt</td><td><a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | <a asp-action="Details" asp-route-id="@item.Id">Details</a> | <a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td></tr> }
+</tbody></table>

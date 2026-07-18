@@ -1,0 +1,3 @@
+@model ForgeTwin.Models.ProductionLog
+@{ ViewData["Title"] = "Delete production log"; }
+<h1>Delete production log</h1><p class="text-danger">Are you sure you want to delete this production log for <strong>@Model.Machine.Name</strong>?</p><form asp-action="Delete"><input type="hidden" asp-for="Id" /><button type="submit" class="btn btn-danger">Delete</button> <a asp-action="Index" class="btn btn-secondary">Cancel</a></form>

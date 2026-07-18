@@ -1,0 +1,4 @@
+@model IEnumerable<ForgeTwin.Models.User>
+@{ ViewData["Title"] = "Users"; }
+<h1>Users</h1><p><a asp-action="Create" class="btn btn-primary">Create user</a></p>
+<table class="table"><thead><tr><th>@Html.DisplayNameFor(model => model.Username)</th><th>@Html.DisplayNameFor(model => model.Role)</th></tr></thead><tbody>@foreach (var user in Model) { <tr><td>@user.Username</td><td>@user.Role</td></tr> }</tbody></table>

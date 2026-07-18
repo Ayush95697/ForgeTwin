@@ -1,0 +1,7 @@
+@model ForgeTwin.Models.MaintenanceRecord
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="mb-3"><label asp-for="MachineId" class="form-label">Machine</label><select asp-for="MachineId" class="form-select" asp-items="ViewBag.MachineId"><option value="">-- Select a machine --</option></select><span asp-validation-for="MachineId" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="ScheduledDate" class="form-label"></label><input asp-for="ScheduledDate" class="form-control" /><span asp-validation-for="ScheduledDate" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="CompletedDate" class="form-label"></label><input asp-for="CompletedDate" class="form-control" /><span asp-validation-for="CompletedDate" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="Type" class="form-label"></label><select asp-for="Type" class="form-select" asp-items="Html.GetEnumSelectList<MaintenanceType>()"></select><span asp-validation-for="Type" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="Notes" class="form-label"></label><textarea asp-for="Notes" class="form-control" rows="4"></textarea><span asp-validation-for="Notes" class="text-danger"></span></div>

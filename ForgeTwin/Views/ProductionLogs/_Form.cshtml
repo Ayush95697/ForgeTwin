@@ -1,0 +1,6 @@
+@model ForgeTwin.Models.ProductionLog
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="mb-3"><label asp-for="MachineId" class="form-label">Machine</label><select asp-for="MachineId" class="form-select" asp-items="ViewBag.MachineId"><option value="">-- Select a machine --</option></select></div>
+<div class="mb-3"><label asp-for="UnitsProduced" class="form-label"></label><input asp-for="UnitsProduced" class="form-control" /><span asp-validation-for="UnitsProduced" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="DefectCount" class="form-label"></label><input asp-for="DefectCount" class="form-control" /><span asp-validation-for="DefectCount" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="LoggedAt" class="form-label"></label><input asp-for="LoggedAt" class="form-control" /><span asp-validation-for="LoggedAt" class="text-danger"></span></div>

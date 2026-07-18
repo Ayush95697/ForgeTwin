@@ -59,6 +59,7 @@ public partial class ForgeTwinDbContext : DbContext
             entity.Property(e => e.Notes)
                 .HasMaxLength(500)
                 .HasDefaultValue("");
+            entity.Property(e => e.Type).HasConversion<byte>();
 
             entity.HasOne(d => d.Machine).WithMany(p => p.MaintenanceRecords)
                 .HasForeignKey(d => d.MachineId)
@@ -95,6 +96,8 @@ public partial class ForgeTwinDbContext : DbContext
             entity.Property(e => e.RowVersion)
                 .IsRowVersion()
                 .IsConcurrencyToken();
+            entity.Property(e => e.Status).HasConversion<byte>();
+            entity.Property(e => e.Priority).HasConversion<byte>();
 
             entity.HasOne(d => d.AssignedToUser).WithMany(p => p.WorkOrders)
                 .HasForeignKey(d => d.AssignedToUserId)

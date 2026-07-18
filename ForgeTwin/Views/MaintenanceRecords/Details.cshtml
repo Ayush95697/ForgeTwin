@@ -1,0 +1,5 @@
+@model ForgeTwin.Models.MaintenanceRecord
+@{ ViewData["Title"] = "Maintenance record"; }
+<h1>Maintenance record</h1>
+<dl class="row"><dt class="col-sm-3">Machine</dt><dd class="col-sm-9">@Model.Machine.Name</dd><dt class="col-sm-3">Scheduled date</dt><dd class="col-sm-9">@Model.ScheduledDate</dd><dt class="col-sm-3">Completed date</dt><dd class="col-sm-9">@Model.CompletedDate</dd><dt class="col-sm-3">Type</dt><dd class="col-sm-9">@Model.Type</dd><dt class="col-sm-3">Notes</dt><dd class="col-sm-9">@Model.Notes</dd></dl>
+<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> | <a asp-action="Index">Back to list</a>

@@ -19,4 +19,5 @@ public partial class MaintenanceRecord
 
     [StringLength(500, ErrorMessage = "Notes can't exceed 500 characters")]
     public string Notes { get; set; } = string.Empty;
+    // Done
 }
