@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ForgeTwin.Controllers;
 
-[Authorize]
+// [Authorize]
 public class ProductionLogsController : Controller
 {
     private readonly ForgeTwinDbContext _context;

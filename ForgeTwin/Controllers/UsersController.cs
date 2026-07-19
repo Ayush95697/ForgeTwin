@@ -8,7 +8,7 @@ using ForgeUser = ForgeTwin.Models.User;
 
 namespace ForgeTwin.Controllers;
 
-[Authorize]
+// [Authorize]
 public class UsersController : Controller
 {
     private readonly ForgeTwinDbContext _context;

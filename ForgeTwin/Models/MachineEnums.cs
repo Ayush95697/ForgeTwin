@@ -1,4 +1,4 @@
-﻿namespace ForgeTwin.Models
+namespace ForgeTwin.Models
 {
     public enum MachineStatus : byte
     {
@@ -38,7 +38,7 @@
         Critical = 3
     }
 
-    public enum UserRole
+    public enum UserRole : byte
     {
         Administrator = 0,
         Supervisor = 1,

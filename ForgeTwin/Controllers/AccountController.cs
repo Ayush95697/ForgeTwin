@@ -1,62 +1,65 @@
-using System.Security.Claims;
-using ForgeTwin.Data;
-using ForgeTwin.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ForgeUser = ForgeTwin.Models.User;
+//// Authentication controller removed for development purposes
+//// The original AccountController code has been commented out.
+//// If needed, re-enable by restoring the original code.
 
-namespace ForgeTwin.Controllers;
+//using ForgeTwin.Data;
+//using ForgeTwin.Models;
+//using Microsoft.AspNetCore.Authentication;
+//using Microsoft.AspNetCore.Authentication.Cookies;
+//using Microsoft.AspNetCore.Identity;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.EntityFrameworkCore;
+//using ForgeUser = ForgeTwin.Models.User;
 
-public class AccountController : Controller
-{
-    private const string RoleClaimType = "Role";
-    private readonly ForgeTwinDbContext _context;
-    private readonly IPasswordHasher<ForgeUser> _passwordHasher;
+//namespace ForgeTwin.Controllers;
 
-    public AccountController(ForgeTwinDbContext context, IPasswordHasher<ForgeUser> passwordHasher)
-    {
-        _context = context;
-        _passwordHasher = passwordHasher;
-    }
+//public class AccountController : Controller
+//{
+//    private const string RoleClaimType = "Role";
+//    private readonly ForgeTwinDbContext _context;
+//    private readonly IPasswordHasher<ForgeUser> _passwordHasher;
 
-    [HttpGet]
-    public IActionResult Login(string? returnUrl = null) => View(new LoginViewModel { ReturnUrl = returnUrl });
+//    public AccountController(ForgeTwinDbContext context, IPasswordHasher<ForgeUser> passwordHasher)
+//    {
+//        _context = context;
+//        _passwordHasher = passwordHasher;
+//    }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(LoginViewModel model)
-    {
-        if (!ModelState.IsValid) return View(model);
+//    [HttpGet]
+//    public IActionResult Login(string? returnUrl = null) => View(new LoginViewModel { ReturnUrl = returnUrl });
 
-        var user = await _context.Users.SingleOrDefaultAsync(user => user.Username == model.Username);
-        if (user is null || _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
-        {
-            ModelState.AddModelError(string.Empty, "Invalid username or password.");
-            return View(model);
-        }
+//    [HttpPost]
+//    [ValidateAntiForgeryToken]
+//    public async Task<IActionResult> Login(LoginViewModel model)
+//    {
+//        if (!ModelState.IsValid) return View(model);
 
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim(RoleClaimType, user.Role.ToString())
-        };
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, RoleClaimType);
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+//        var user = await _context.Users.SingleOrDefaultAsync(user => user.Username == model.Username);
+//        if (user is null || _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Failed)
+//        {
+//            ModelState.AddModelError(string.Empty, "Invalid username or password.");
+//            return View(model);
+//        }
 
-        return !string.IsNullOrWhiteSpace(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl)
-            ? LocalRedirect(model.ReturnUrl)
-            : RedirectToAction("Index", "Home");
-    }
+//        var claims = new[]
+//        {
+//            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+//            new Claim(ClaimTypes.Name, user.Username),
+//            new Claim(RoleClaimType, user.Role.ToString())
+//        };
+//        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, RoleClaimType);
+//        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Logout()
-    {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToAction(nameof(Login));
-    }
-}
+//        return !string.IsNullOrWhiteSpace(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl)
+//            ? LocalRedirect(model.ReturnUrl)
+//            : RedirectToAction("Index", "Home");
+//    }
+
+//    [HttpPost]
+//    [ValidateAntiForgeryToken]
+//    public async Task<IActionResult> Logout()
+//    {
+//        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+//        return RedirectToAction(nameof(Login));
+//    }
+//}

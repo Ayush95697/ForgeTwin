@@ -2,13 +2,13 @@ using ForgeTwin.Data;
 using ForgeTwin.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Authorization;
+// using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 
 namespace ForgeTwin.Controllers;
 
-[Authorize]
+// [Authorize]
 public class WorkOrdersController : Controller
 {
     private readonly ForgeTwinDbContext _context;

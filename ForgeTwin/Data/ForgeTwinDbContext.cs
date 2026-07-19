@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using ForgeTwin.Models;
 using Microsoft.EntityFrameworkCore;
@@ -86,6 +86,9 @@ public partial class ForgeTwinDbContext : DbContext
 
             entity.Property(e => e.PasswordHash).HasMaxLength(200);
             entity.Property(e => e.Username).HasMaxLength(50);
+
+            // Map UserRole enum to tinyint (byte) in the database to avoid InvalidCastException
+            entity.Property(e => e.Role).HasConversion<byte>();
         });
 
         modelBuilder.Entity<WorkOrder>(entity =>
