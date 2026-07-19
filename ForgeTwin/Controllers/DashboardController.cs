@@ -1,25 +1,26 @@
-using System.Diagnostics;
-using System;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ForgeTwin.Data;
 using ForgeTwin.Models;
-using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ForgeTwin.Controllers
 {
-    public class HomeController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class DashboardController : ControllerBase
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly ForgeTwinDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, ForgeTwinDbContext context)
+        public DashboardController(ForgeTwinDbContext context)
         {
-            _logger = logger;
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<ActionResult<DashboardViewModel>> GetDashboardStats()
         {
             var now = DateTime.UtcNow;
             var sevenDaysAgo = now.AddDays(-7);
@@ -55,18 +56,7 @@ namespace ForgeTwin.Controllers
                     .CountAsync()
             };
 
-            return View(viewModel);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return Ok(viewModel);
         }
     }
 }
