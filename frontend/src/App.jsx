@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
+import Landing from './pages/Landing';
 import Dashboard from './pages/Dashboard';
 import Machines from './pages/Machines';
 import WorkOrders from './pages/WorkOrders';
@@ -12,8 +13,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Landing />} />
         <Route path="/" element={<Layout />}>
-          <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="machines" element={<Machines />} />
           <Route path="work-orders" element={<WorkOrders />} />
           <Route path="maintenance" element={<Maintenance />} />
