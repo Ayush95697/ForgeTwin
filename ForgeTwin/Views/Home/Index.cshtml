@@ -1,8 +1,93 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@model ForgeTwin.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <div class="row">
+        <!-- Machine Status Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-primary h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Machine Status</h5>
+                    <ul class="list-unstyled mb-0">
+                        @foreach (var kvp in Model.MachineStatusCounts)
+                        {
+                            <li>@kvp.Key: @kvp.Value</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Open WorkOrders Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-success h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Open Work Orders (by Priority)</h5>
+                    <ul class="list-unstyled mb-0">
+                        @foreach (var kvp in Model.OpenWorkOrderPriorityCounts)
+                        {
+                            <li>@kvp.Key: @kvp.Value</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Maintenance Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Upcoming Maintenance (next 7 days)</h5>
+                    <p class="card-text">@Model.UpcomingMaintenanceCount</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <!-- Production Summary Card -->
+        <div class="col-md-6 mb-3">
+            <div class="card text-white bg-info h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Production (last 7 days)</h5>
+                    <p>Total Units Produced: @Model.TotalUnitsProducedLast7Days</p>
+                    <p>Total Defects: @Model.TotalDefectCountLast7Days</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Low Stock Items Card -->
+        <div class="col-md-6 mb-3">
+            <div class="card text-white bg-danger h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Low Stock Alerts</h5>
+                    @if (Model.LowStockItems.Any())
+                    {
+                        <table class="table table-sm table-striped table-dark mb-0">
+                            <thead>
+                                <tr><th>Name</th><th>Qty</th><th>Reorder</th></tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.LowStockItems)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>@item.QuantityOnHand</td>
+                                        <td>@item.ReorderThreshold</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="card-text">All inventory levels are healthy.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
