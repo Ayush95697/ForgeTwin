@@ -17,7 +17,7 @@ public class MachinesController : Controller
 
     // GET: MACHINES
     public async Task<IActionResult> Index()    
-    {
+        {
         return View(await _context.Machines.ToListAsync());
     }
 

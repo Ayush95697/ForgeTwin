@@ -5,31 +5,33 @@
 }
 
 <div class="container mt-4">
-    <div class="row">
+    <div class="row g-3">
         <!-- Machine Status Card -->
         <div class="col-md-4 mb-3">
-            <div class="card text-white bg-primary h-100">
-                <div class="card-body">
+            <div class="dashboard-card border-primary">
+                <div class="icon-bg"><i class="bi bi-gear"></i></div>
+                <div class="p-3">
                     <h5 class="card-title">Machine Status</h5>
                     <ul class="list-unstyled mb-0">
                         @foreach (var kvp in Model.MachineStatusCounts)
                         {
-                            <li>@kvp.Key: @kvp.Value</li>
+                            <li><span class="badge bg-primary me-1">@kvp.Key</span>: @kvp.Value</li>
                         }
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- Open WorkOrders Card -->
+        <!-- Open Work Orders Card -->
         <div class="col-md-4 mb-3">
-            <div class="card text-white bg-success h-100">
-                <div class="card-body">
+            <div class="dashboard-card border-success">
+                <div class="icon-bg"><i class="bi bi-clipboard-check"></i></div>
+                <div class="p-3">
                     <h5 class="card-title">Open Work Orders (by Priority)</h5>
                     <ul class="list-unstyled mb-0">
                         @foreach (var kvp in Model.OpenWorkOrderPriorityCounts)
                         {
-                            <li>@kvp.Key: @kvp.Value</li>
+                            <li><span class="badge bg-success me-1">@kvp.Key</span>: @kvp.Value</li>
                         }
                     </ul>
                 </div>
@@ -37,28 +39,35 @@
         </div>
 
         <!-- Upcoming Maintenance Card -->
-        <div class="card-body">
-            <h5 class="card-title">Open Work Orders (by Priority)</h5>
-            @if (Model.OpenWorkOrderPriorityCounts.Any())
-            {
-                <ul class="list-unstyled mb-0">
-                    @foreach (var kvp in Model.OpenWorkOrderPriorityCounts)
+        <div class="col-md-4 mb-3">
+            <div class="dashboard-card border-warning">
+                <div class="icon-bg"><i class="bi bi-tools"></i></div>
+                <div class="p-3">
+                    <h5 class="card-title">Upcoming Maintenance</h5>
+                    @if (Model.OpenWorkOrderPriorityCounts.Any())
                     {
-                        <li>@kvp.Key: @kvp.Value</li>
+                        <ul class="list-unstyled mb-0">
+                            @foreach (var kvp in Model.OpenWorkOrderPriorityCounts)
+                            {
+                                <li>@kvp.Key: @kvp.Value</li>
+                            }
+                        </ul>
                     }
-                </ul>
-            }
-            else
-            {
-                <p class="card-text mb-0">No open work orders.</p>
-            }
+                    else
+                    {
+                        <p class="mb-0">No upcoming maintenance.</p>
+                    }
+                </div>
+            </div>
         </div>
+    </div>
 
-    <div class="row mt-3">
+    <div class="row g-3 mt-3">
         <!-- Production Summary Card -->
         <div class="col-md-6 mb-3">
-            <div class="card text-white bg-info h-100">
-                <div class="card-body">
+            <div class="dashboard-card border-info">
+                <div class="icon-bg"><i class="bi bi-graph-up"></i></div>
+                <div class="p-3">
                     <h5 class="card-title">Production (last 7 days)</h5>
                     <p>Total Units Produced: @Model.TotalUnitsProducedLast7Days</p>
                     <p>Total Defects: @Model.TotalDefectCountLast7Days</p>
@@ -68,14 +77,19 @@
 
         <!-- Low Stock Items Card -->
         <div class="col-md-6 mb-3">
-            <div class="card text-white bg-danger h-100">
-                <div class="card-body">
+            <div class="dashboard-card border-danger">
+                <div class="icon-bg"><i class="bi bi-exclamation-triangle"></i></div>
+                <div class="p-3">
                     <h5 class="card-title">Low Stock Alerts</h5>
                     @if (Model.LowStockItems.Any())
                     {
-                        <table class="table table-sm table-striped table-dark mb-0">
+                        <table class="table table-sm table-striped mb-0">
                             <thead>
-                                <tr><th>Name</th><th>Qty</th><th>Reorder</th></tr>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Qty</th>
+                                    <th>Reorder</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model.LowStockItems)
@@ -91,7 +105,7 @@
                     }
                     else
                     {
-                        <p class="card-text">All inventory levels are healthy.</p>
+                        <p class="mb-0">All inventory levels are healthy.</p>
                     }
                 </div>
             </div>
