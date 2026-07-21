@@ -37,15 +37,22 @@
         </div>
 
         <!-- Upcoming Maintenance Card -->
-        <div class="col-md-4 mb-3">
-            <div class="card text-white bg-warning h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Upcoming Maintenance (next 7 days)</h5>
-                    <p class="card-text">@Model.UpcomingMaintenanceCount</p>
-                </div>
-            </div>
+        <div class="card-body">
+            <h5 class="card-title">Open Work Orders (by Priority)</h5>
+            @if (Model.OpenWorkOrderPriorityCounts.Any())
+            {
+                <ul class="list-unstyled mb-0">
+                    @foreach (var kvp in Model.OpenWorkOrderPriorityCounts)
+                    {
+                        <li>@kvp.Key: @kvp.Value</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="card-text mb-0">No open work orders.</p>
+            }
         </div>
-    </div>
 
     <div class="row mt-3">
         <!-- Production Summary Card -->
