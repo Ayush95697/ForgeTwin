@@ -10,5 +10,6 @@ namespace ForgeTwin.Models
         public int TotalUnitsProducedLast7Days { get; set; }
         public int TotalDefectCountLast7Days { get; set; }
         public int UpcomingMaintenanceCount { get; set; }
+        public List<DailyProductionData> DailyProductionTrend { get; set; } = new();
     }
 }

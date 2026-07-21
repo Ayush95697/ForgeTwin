@@ -12,12 +12,7 @@
                 <div class="icon-bg"><i class="bi bi-gear"></i></div>
                 <div class="p-3">
                     <h5 class="card-title">Machine Status</h5>
-                    <ul class="list-unstyled mb-0">
-                        @foreach (var kvp in Model.MachineStatusCounts)
-                        {
-                            <li><span class="badge bg-primary me-1">@kvp.Key</span>: @kvp.Value</li>
-                        }
-                    </ul>
+                    <canvas id="machineStatusChart" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -28,12 +23,7 @@
                 <div class="icon-bg"><i class="bi bi-clipboard-check"></i></div>
                 <div class="p-3">
                     <h5 class="card-title">Open Work Orders (by Priority)</h5>
-                    <ul class="list-unstyled mb-0">
-                        @foreach (var kvp in Model.OpenWorkOrderPriorityCounts)
-                        {
-                            <li><span class="badge bg-success me-1">@kvp.Key</span>: @kvp.Value</li>
-                        }
-                    </ul>
+                    <canvas id="workOrdersChart" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -112,3 +102,83 @@
         </div>
     </div>
 </div>
+
+<div class="row g-3 mt-3">
+    <div class="col-12 mb-3">
+        <div class="dashboard-card border-primary">
+            <div class="p-3">
+                <h5 class="card-title">Production Trend (Last 7 Days)</h5>
+                <canvas id="productionTrendChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    const machineStatusData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MachineStatusCounts));
+    const workOrderData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.OpenWorkOrderPriorityCounts));
+    const dailyTrendData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.DailyProductionTrend));
+
+    // Machine Status Doughnut
+    const ctxMachine = document.getElementById('machineStatusChart').getContext('2d');
+    new Chart(ctxMachine, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(machineStatusData),
+            datasets: [{
+                data: Object.values(machineStatusData),
+                backgroundColor: ['#4e73df','#1cc88a','#36b9cc','#ff6384','#ffcd56']
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    // Work Orders Bar
+    const ctxWork = document.getElementById('workOrdersChart').getContext('2d');
+    new Chart(ctxWork, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(workOrderData),
+            datasets: [{
+                label: 'Open Work Orders',
+                data: Object.values(workOrderData),
+                backgroundColor: '#36b9cc'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // Production Trend Line
+    const ctxTrend = document.getElementById('productionTrendChart').getContext('2d');
+    const trendLabels = dailyTrendData.map(d => new Date(d.Date).toLocaleDateString());
+    const unitsData = dailyTrendData.map(d => d.UnitsProduced);
+    const defectData = dailyTrendData.map(d => d.DefectCount);
+    new Chart(ctxTrend, {
+        type: 'line',
+        data: {
+            labels: trendLabels,
+            datasets: [
+                {
+                    label: 'Units Produced',
+                    data: unitsData,
+                    borderColor: '#4e73df',
+                    fill: false,
+                    tension: 0.1
+                },
+                {
+                    label: 'Defects',
+                    data: defectData,
+                    borderColor: '#e74a3b',
+                    fill: false,
+                    tension: 0.1
+                }
+            ]
+        },
+        options: { responsive: true }
+    });
+</script>
+}

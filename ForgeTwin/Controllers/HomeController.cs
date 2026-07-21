@@ -52,7 +52,20 @@ namespace ForgeTwin.Controllers
 
                 UpcomingMaintenanceCount = await _context.MaintenanceRecords
                     .Where(mr => mr.ScheduledDate >= now && mr.ScheduledDate <= upcoming && mr.CompletedDate == null)
-                    .CountAsync()
+                    .CountAsync(),
+
+                // 7‑day production trend
+                DailyProductionTrend = await _context.ProductionLogs
+                    .Where(p => p.LoggedAt >= sevenDaysAgo)
+                    .GroupBy(p => p.LoggedAt.Date)
+                    .Select(g => new DailyProductionData
+                    {
+                        Date = g.Key,
+                        UnitsProduced = g.Sum(p => p.UnitsProduced),
+                        DefectCount = g.Sum(p => p.DefectCount)
+                    })
+                    .OrderBy(d => d.Date)
+                    .ToListAsync()
             };
 
             return View(viewModel);
